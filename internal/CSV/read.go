@@ -3,14 +3,13 @@ package CSV
 import (
 	"encoding/csv"
 	"errors"
-	"log"
 	"os"
 )
 
 func Read() ([][]string, error) {
 	file, err := os.Open("C:/Users/Alireza/Desktop/business-financial-data-mar-2022-quarter-csv.csv")
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer file.Close()
 
