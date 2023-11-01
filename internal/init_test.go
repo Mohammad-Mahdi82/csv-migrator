@@ -3,7 +3,6 @@ package internal
 import (
 	"CSV/internal/core"
 	"fmt"
-	"log"
 	"testing"
 	"time"
 )
@@ -60,7 +59,7 @@ func TestInsertData(t *testing.T) {
 		fmt.Printf("pack cursor: %v\n", i*10)
 		err := core.InsertManyRows(base, &sample, i*int(base), sampleRowLoader)
 		if err != nil {
-			log.Fatal(err)
+			t.Fail()
 		}
 	}
 
@@ -68,7 +67,7 @@ func TestInsertData(t *testing.T) {
 		fmt.Printf("triggered! diff:%v\n", diff)
 		err := core.InsertManyRows(int8(diff), &sample, i*int(base), sampleRowLoader)
 		if err != nil {
-			log.Fatal(err)
+			t.Fail()
 		}
 	}
 
