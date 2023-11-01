@@ -3,6 +3,7 @@ package internal
 import (
 	"CSV/internal/core"
 	"fmt"
+	"log"
 	"testing"
 	"time"
 )
@@ -35,10 +36,10 @@ var sample [][]string = [][]string{
 	},
 }
 
-func sampleRowLoader(records *[][]string, i int) int {
+func sampleRowLoader(records *[][]string, i int) (int, error) {
 	fmt.Printf("index: %v\n", i+1)
 	time.Sleep(50 * time.Millisecond)
-	return i
+	return i, nil
 }
 
 func TestConvert(t *testing.T) {
@@ -57,12 +58,18 @@ func TestInsertData(t *testing.T) {
 
 	for i = 0; i < (len(sample) / int(base)); i++ {
 		fmt.Printf("pack cursor: %v\n", i*10)
-		core.InsertManyRows(base, &sample, i*int(base), sampleRowLoader)
+		err := core.InsertManyRows(base, &sample, i*int(base), sampleRowLoader)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	if diff := len(sample) % int(base); diff != 0 {
 		fmt.Printf("triggered! diff:%v\n", diff)
-		core.InsertManyRows(int8(diff), &sample, i*int(base), sampleRowLoader)
+		err := core.InsertManyRows(int8(diff), &sample, i*int(base), sampleRowLoader)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 }

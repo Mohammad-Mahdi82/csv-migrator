@@ -6,6 +6,8 @@ import (
 	"log"
 )
 
+//
+
 func Migrate() {
 	records, err := CSV.Read()
 	if err != nil {

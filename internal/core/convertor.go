@@ -2,6 +2,8 @@ package core
 
 import "CSV/pkg/db"
 
+// convert and return a suitable struct to be saved in MongoDB
+
 func Convert(records *[][]string, i int) (db.FinancialDataType, error) {
 	Records := *records
 	record := Records[i]
